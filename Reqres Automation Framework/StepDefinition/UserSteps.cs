@@ -48,7 +48,7 @@ namespace Reqres_Automation_Framework.StepDefinition
         {
             var expectedResult = table.CreateInstance<UserModel>();
             string response = _httpRequestMethods.content;
-            var actualResult = JsonConvert.DeserializeObject<UserModel>(response);
+            var actualResult = JsonConvert.DeserializeObject<SingleUserModel>(response).data;
             Assert.IsTrue(SerializeObjects(expectedResult, actualResult));
         }
 

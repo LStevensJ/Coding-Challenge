@@ -31,4 +31,3 @@ C:\Users\lesli\Source\Repos\Reqres Automation Framework\Reqres Automation Framew
 C:\Users\lesli\Source\Repos\Reqres Automation Framework\Reqres Automation Framework\obj\Debug\Reqres Automation Framework.csproj.CopyComplete
 C:\Users\lesli\Source\Repos\Reqres Automation Framework\Reqres Automation Framework\obj\Debug\Reqres Automation Framework.dll
 C:\Users\lesli\Source\Repos\Reqres Automation Framework\Reqres Automation Framework\obj\Debug\Reqres Automation Framework.pdb
-C:\Users\lesli\Source\Repos\Reqres Automation Framework\Reqres Automation Framework\obj\Debug\Reqres Automation Framework.csprojAssemblyReference.cache
