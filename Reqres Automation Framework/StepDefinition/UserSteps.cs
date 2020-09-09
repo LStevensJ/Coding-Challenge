@@ -25,37 +25,39 @@ namespace Reqres_Automation_Framework.StepDefinition
         [Given(@"the reqres service is running and a POST request is made to the '(.*)' endpoint")]
         public void GivenTheReqresServiceIsRunningAndAPOSTRequestIsMadeToTheEndpoint(string resource)
         {
-            string postBody = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin\\Debug", ""); // First method of tramsitting data via API 
-            _httpRequestMethods.PostMethod(resource, File.ReadAllText(postBody + @"\PostBodyData.json"));
+            string postBody = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin\\Debug", ""); // First method of tramsitting data via API
+            _httpRequestMethods.PostMethod(resource, File.ReadAllText(postBody + @"\PostBodyData.json"));// File path is stored in postBody variable and passed
+            // to the post method in the form of an argument. Note post method takes two arguments
         }
 
-        [Then(@"the status code for the GET request should be '(.*)'")]
+        [Then(@"the status code for the request should be '(.*)'")]
         public void ThenTheStatusCodeForTheGETRequestShouldBe(string expectedResult)
         {
-            string actualResult = _httpRequestMethods.statusCode.ToString();
-            Assert.IsTrue(expectedResult.Equals(actualResult));
+            string actualResult = _httpRequestMethods.statusCode.ToString(); //status code property is retrieve and stored here at RT 
+            Assert.IsTrue(expectedResult.Equals(actualResult)); //An assertion is performed on actual vs expected result
         }
 
 
         [Given(@"the reqres service is running and a GET request is made to the '(.*)' endpoint")]
         public void GivenTheReqresServiceIsRunningAndAGETRequestIsMadeToTheEndpoint(string resource)
         {
-            _httpRequestMethods.GetMethod(resource);
+            _httpRequestMethods.GetMethod(resource); //Note get method takes one argument i.e. endpoint for the info we wish to retrieve from resource 
         }
 
         [Then(@"the following user should be present:")]
         public void ThenTheFollowingUserShouldBePresent(Table table)
         {
-            var expectedResult = table.CreateInstance<UserModel>();
-            string response = _httpRequestMethods.content;
+            var expectedResult = table.CreateInstance<UserModel>(); //Create instance method used to create table with single set of data
+            string response = _httpRequestMethods.content; //content from GET response is stored in response var at RT then deserialised to reconstruct the object
             var actualResult = JsonConvert.DeserializeObject<SingleUserModel>(response).data;
-            Assert.IsTrue(SerializeObjects(expectedResult, actualResult));
+            Assert.IsTrue(SerializeObjects(expectedResult, actualResult)); //SerialiserObj method was created to flatten and convert the complex and deserialised
+            //object to a string collection which can then be compared using assertion method.
         }
 
         [Then(@"the following list of users should be present:")]
         public void ThenTheFollowingListOfUsersShouldBePresent(Table table)
         {
-            var expectedResult = table.CreateSet<UserModel>();
+            var expectedResult = table.CreateSet<UserModel>(); //expected data is stored in a table object which models 'UserModel' class. 
             var response = _httpRequestMethods.content;
             var actualResult = JsonConvert.DeserializeObject<UserListModel>(response).data;
             Assert.IsTrue(SerializeObjects(expectedResult, actualResult));
@@ -78,18 +80,18 @@ namespace Reqres_Automation_Framework.StepDefinition
             Assert.AreEqual(expectedResult, actualResult); //Alternative assertion method to verify status response. 
         }
 
-        public bool SerializeObjects(object obj1, object obj2)
-        {
+        public bool SerializeObjects(object obj1, object obj2) //Custom method created to serialise a set of deserialised data structures for the purpose comparison
+        {                                                       
             bool match = false;
 
             var object1 = JsonConvert.SerializeObject(obj1);
             var object2 = JsonConvert.SerializeObject(obj2);
-            if (object1 == object2)
+            if (object1 == object2) //Block of code in If-statment is executed if serliased objects are identical
             {
                 match = true;
             }
 
-            return match;
+            return match; //method returns true if the objects are identical and false if otherwise
         }
 
     }

@@ -8,7 +8,7 @@ namespace Reqres_Automation_Framework.Hooks
     public class HttpRequestMethods
     {
         public HttpClient _httpClient;  //httpclient is declared publicly here and can be later instantiated 
-        private string baseUrl = "https://reqres.in";
+        private string baseUrl = "https://reqres.in"; //baserUrl for reqres API
 
         //Two primary pieces [status code and content ]of data required to validate each scenario are declared at the top and made accessible 
         // to other class files
@@ -42,19 +42,20 @@ namespace Reqres_Automation_Framework.Hooks
         }
 
 
-        public void PostMethod(string resource, string body)
+        public void PostMethod(string resource, string body) //This method requires resource and body to perform post
         {
-            var handler = new HttpClientHandler()
+            var handler = new HttpClientHandler() //new client handler object is created 
             {
-                UseProxy = false
+                UseProxy = false //handler proxy is set to false
             };
 
             using (_httpClient = new HttpClient(handler))
             {
                 var response = _httpClient.PostAsync(baseUrl + resource, new StringContent(body, Encoding.UTF8, "application/json"));
+                // Post body and header information [encoding and media type] are parsed to the PostAsync method  
                 if (response.Result.IsSuccessStatusCode)
                 {
-                    statusCode = response.Result.StatusCode;
+                    statusCode = response.Result.StatusCode; //status code information is retrieved and stored here.
                 }
                 else
                 {
