@@ -19,6 +19,7 @@ Please note the following status code equivalents have been used to verify each 
 
 'Created' = 201  
 'OK' = 200
+
 'NotFound' = 404 
 
 HttpClient returns and represents the abovementioned phrases as success status code.
